@@ -1,0 +1,886 @@
+{
+	"info": {
+		"_postman_id": "accc62a8-b8a0-409b-917e-54e3a8131429",
+		"name": "API-GATEWAY",
+		"description": "This collection has all the service url's mapped to the gateway for the Food Portal Application.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33300078"
+	},
+	"item": [
+		{
+			"name": "USER-SERVICE",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\":\"meenesh.joshi\",\r\n\"password\":\"mj_password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9001/user-service/user/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"user-service",
+								"user",
+								"signup"
+							]
+						},
+						"description": "User can signup to the portal using this api."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('token',pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"meenesh.joshi\",\r\n    \"password\":\"mj_password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9001/user-service/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"user-service",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"Token value: \" + pm.collectionVariables.get('token'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"{{token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9001/user-service//user/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"user-service",
+								"",
+								"user",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This service is responsible for user signup,login and role verify.Once the user logs in,token is generated which is used for further requests."
+		},
+		{
+			"name": "RESTAURANTS-AND-MENU",
+			"item": [
+				{
+					"name": "RESTAURANTS",
+					"item": [
+						{
+							"name": "Get All Restaurants",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const restaurants = pm.response.json();\r",
+											"const restaurant = restaurants[0];\r",
+											"pm.collectionVariables.set('restaurantId', restaurant.restaurantId);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/restaurant/getAllRestaurants",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"restaurant",
+										"getAllRestaurants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Restaurant By ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/restaurant/getRestaurantById?restaurantId={{restaurantId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"restaurant",
+										"getRestaurantById"
+									],
+									"query": [
+										{
+											"key": "restaurantId",
+											"value": "{{restaurantId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Restaurant By Name",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/restaurant/getRestaurantByName?restaurantName=Chilli's 360",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"restaurant",
+										"getRestaurantByName"
+									],
+									"query": [
+										{
+											"key": "restaurantName",
+											"value": "Chilli's 360"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Restaurant By AreaCode",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/restaurant/getRestaurantByAreaCode?areaCode=Sector 31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"restaurant",
+										"getRestaurantByAreaCode"
+									],
+									"query": [
+										{
+											"key": "areaCode",
+											"value": "Sector 31"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Restaurant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"restaurantName\":\"MJ's Dining\",\r\n\"address\":{\r\n    \"streetAddress\":\"Chester-le Street\",\r\n    \"city\":\"Bangalore\",\r\n    \"areaCode\":\"Sector 55\"\r\n},\r\n\"diningCapacity\":\"10\",\r\n\"openTime\":\"10:45\",\r\n\"closeTime\":\"22:30\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/restaurant/addRestaurant",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"restaurant",
+										"addRestaurant"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mark Favourite",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/restaurant/markFavourite?restaurantId=51293f75-7f44-457c-8bc7-98c94308e197",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"restaurant",
+										"markFavourite"
+									],
+									"query": [
+										{
+											"key": "restaurantId",
+											"value": "51293f75-7f44-457c-8bc7-98c94308e197"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "MENU",
+					"item": [
+						{
+							"name": "User Search",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const foodMenu = pm.response.json();\r",
+											"const foodMenuByRestaurants = foodMenu.foodMenuByRestaurants;\r",
+											"const foodMenuByRestaurant = foodMenuByRestaurants[0];\r",
+											"const foodItems = foodMenuByRestaurant.foodItems;\r",
+											"const itemId=foodItems[0].itemId;\r",
+											"pm.collectionVariables.set('itemId', itemId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/food-menu/userSearch?foodItem=&restaurant&areaCode=",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"food-menu",
+										"userSearch"
+									],
+									"query": [
+										{
+											"key": "foodItem",
+											"value": ""
+										},
+										{
+											"key": "restaurant",
+											"value": null
+										},
+										{
+											"key": "areaCode",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Menu By Restaurant ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/food-menu/getRestaurantMenu?restaurantId={{restaurantId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"food-menu",
+										"getRestaurantMenu"
+									],
+									"query": [
+										{
+											"key": "restaurantId",
+											"value": "{{restaurantId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Item to Restaurant Menu",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"itemName\":\"MJ special dish\",\r\n    \"category\":\"JAPANESE\",\r\n    \"price\":20.0,\r\n    \"description\":\"It is a special dish\",\r\n    \"quantity\":10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/food-menu/addItemsToRestaurantMenu?restaurantId={{restaurantId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"food-menu",
+										"addItemsToRestaurantMenu"
+									],
+									"query": [
+										{
+											"key": "restaurantId",
+											"value": "{{restaurantId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Item Details by Item ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/food-menu/getFoodItemDetails?itemId={{itemId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"food-menu",
+										"getFoodItemDetails"
+									],
+									"query": [
+										{
+											"key": "itemId",
+											"value": "{{itemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Restaurant by Item ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9001/restaurants-and-menu-service/food-menu/getRestaurantByItemId?itemId={{itemId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9001",
+									"path": [
+										"restaurants-and-menu-service",
+										"food-menu",
+										"getRestaurantByItemId"
+									],
+									"query": [
+										{
+											"key": "itemId",
+											"value": "{{itemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "DELIVERY-SERVICE",
+			"item": [
+				{
+					"name": "Add Item to the cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itemId\":\"{{itemId}}\",\r\n    \"quantity\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/delivery-service/food-delivery/addItemToTheCart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"delivery-service",
+								"food-delivery",
+								"addItemToTheCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Item from the cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9001/delivery-service/food-delivery/removeItemFromTheCart?itemId={{itemId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"delivery-service",
+								"food-delivery",
+								"removeItemFromTheCart"
+							],
+							"query": [
+								{
+									"key": "itemId",
+									"value": "{{itemId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Items in the cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9001/delivery-service/food-delivery/viewItemsInTheCart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"delivery-service",
+								"food-delivery",
+								"viewItemsInTheCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const order=pm.response.json();\r",
+									"pm.collectionVariables.set('orderId',order.orderId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"streetAddress\":\"B-Street\",\r\n    \"city\":\"New Delhi\",\r\n    \"areaCode\":\"Sector 55\",\r\n    \"contactNo\":\"8178808221\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/delivery-service/food-delivery/confirmOrder",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"delivery-service",
+								"food-delivery",
+								"confirmOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/food-delivery/cancelOrder?orderId={{orderId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"food-delivery",
+								"cancelOrder"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DINING-SERVICE",
+			"item": [
+				{
+					"name": "Book Dining",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const booking=pm.response.json();\r",
+									"pm.collectionVariables.set('bookingId',booking.bookingId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"restaurantId\":\"{{restaurantId}}\",\r\n    \"date\":\"11-03-2024\",\r\n    \"bookingSlot\":{\r\n        \"startTime\":\"14:00\",\r\n        \"endTime\":\"15:00\"\r\n    },\r\n    \"noOfGuests\":4,\r\n    \"userEMail\":\"meenesh.joshi@gmail.com\",\r\n    \"userContactNo\":\"8178808221\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/dining-service/bookDining",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"dining-service",
+								"bookDining"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Bookings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9001/dining-service/viewBooking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"dining-service",
+								"viewBooking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9001/dining-service/cancelBooking?bookingId={{bookingId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"dining-service",
+								"cancelBooking"
+							],
+							"query": [
+								{
+									"key": "bookingId",
+									"value": "{{bookingId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PAYMENT-SERVICE",
+			"item": [
+				{
+					"name": "Make Payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('transactionID',pm.response.json().transactionId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cardNumber\":\"1231231231231231\",\r\n    \"cvv\":\"123\",\r\n    \"amount\":\"450\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/payment-service/makePayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"payment-service",
+								"makePayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Process Refund",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\":\"{{transactionID}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9001/payment-service/refund",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"payment-service",
+								"refund"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add({key:'Authorization', value:'Bearer '+ pm.collectionVariables.get('token')});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "restaurantId",
+			"value": ""
+		},
+		{
+			"key": "itemId",
+			"value": ""
+		},
+		{
+			"key": "transactionID",
+			"value": ""
+		},
+		{
+			"key": "orderId",
+			"value": ""
+		},
+		{
+			"key": "bookingId",
+			"value": ""
+		}
+	]
+}

@@ -1,0 +1,97 @@
+version: "3.8"
+
+services:
+    discovery-server:
+        container_name: discovery-server
+        image: meeneshjoshi/discovery-server:latest
+        ports:
+                - "8761:8761"
+        environment:
+          eureka.instance.hostname: discovery-server
+          eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka/
+        volumes:
+                - /tmp:/workspace/logs
+
+
+    apigateway:
+        container_name: api-gateway
+        image: meeneshjoshi/api-gateway:latest
+        ports:
+                - "9001:9001"
+        depends_on:
+                - discovery-server
+        environment:
+          server.port: 9001
+          eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka/
+        volumes:
+                - /tmp:/workspace/logs
+
+
+    restaurants-and-menu-service:
+        container_name: restaurants-and-menu-service
+        image: meeneshjoshi/restaurants-and-menu-service:latest
+        ports:
+                - "8081:8081"
+        depends_on:
+                - discovery-server
+        environment:
+          server.port: 8081
+          eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka/
+        volumes:
+                - /tmp:/workspace/logs
+
+    delivery-service:
+        container_name: delivery-service
+        image: meeneshjoshi/delivery-service:latest
+        ports:
+                - "8082:8082"
+        depends_on:
+                - discovery-server
+        environment:
+          server.port: 8082
+          eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka/
+        volumes:
+                - /tmp:/workspace/logs
+
+
+    dining-service:
+        container_name: dining-service
+        image: meeneshjoshi/dining-service:latest
+        ports:
+                - "8083:8083"
+        depends_on:
+                - discovery-server
+        environment:
+          server.port: 8083
+          eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka/
+        volumes:
+                - /tmp:/workspace/logs
+
+
+    user-service:
+        container_name: user-service
+        image: meeneshjoshi/user-service:latest
+        ports:
+                - "9002:9002"
+        depends_on:
+                - discovery-server
+        environment:
+          server.port: 9002
+          eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka/
+        volumes:
+                - /tmp:/workspace/logs
+
+
+
+    payment-service:
+        container_name: payment-service
+        image: meeneshjoshi/payment-service:latest
+        ports:
+                - "8084:8084"
+        depends_on:
+                - discovery-server
+        environment:
+          server.port: 8084
+          eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka/
+        volumes:
+                - /tmp:/workspace/logs
